@@ -22,7 +22,7 @@
 #include<iostream>
 #include<algorithm>
 using namespace std;
-
+//Quick divide power
 int main()
 {
 	long long int N;
