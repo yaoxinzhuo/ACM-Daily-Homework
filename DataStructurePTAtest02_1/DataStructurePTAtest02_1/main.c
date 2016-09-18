@@ -8,7 +8,7 @@ struct Node {
     PtrToNode   Next;
 };
 typedef PtrToNode List;
-
+ 
 List Read(); /* 细节在此不表 */
 void Print( List L ); /* 细节在此不表；空链表将输出NULL */
 
