@@ -63,32 +63,13 @@ void inputPolynimal(Node pRear,int n)
 
 }
 
-int main(int argc, const char * argv[]) {
-    
-    Node p1 = (struct polyNode*)malloc(sizeof(struct polyNode));
-    Node p2 = (struct polyNode*)malloc(sizeof(struct polyNode));
-    Node pMul = (struct polyNode*)malloc(sizeof(struct polyNode));
+Node addPolynimal(Node p1,Node p2)
+{
+    Node p11 = p1 -> next;
+    Node p22 = p2 -> next;
     Node pAdd = (struct polyNode*)malloc(sizeof(struct polyNode));
-    Node p1Head = p1, p1Rear = p1;
-    Node p2Head = p2, p2Rear = p2;
+    pAdd->next = NULL;
     Node pAddHead = pAdd;
-    Node pMulHead = pMul;
-    Node p11 = p1;
-    Node p22 = p2;
-    
-    int n1,n2;
-    
-    scanf("%d",&n1);
-    inputPolynimal(p1Rear, n1);
-    printPolynimal(p1Head);
-    
-    scanf("%d",&n2);
-    inputPolynimal(p2Rear, n2);
-    printPolynimal(p2Head);
-    
-   //Add
-    p11 = p11 -> next;
-    p22 = p22 -> next;
     while (p11 != NULL && p22 != NULL)
     {
         Node p = (struct polyNode*)malloc(sizeof(struct polyNode));
@@ -117,8 +98,8 @@ int main(int argc, const char * argv[]) {
                 pAdd->next = p;
                 pAdd = pAdd->next;
             }
-                p11 = p11->next;
-                p22 = p22->next;
+            p11 = p11->next;
+            p22 = p22->next;
         }
         
     }
@@ -140,18 +121,75 @@ int main(int argc, const char * argv[]) {
         pAdd = pAdd->next;
         p22 = p22->next;
     }
+    return pAddHead;
+}
+
+Node mulPolynimal(Node p1,Node p2)
+{
+    Node p11 = p1->next;
+    Node p22 = p2->next;
+    Node finalResult = (struct polyNode*)malloc(sizeof(struct polyNode));
+    finalResult->next = NULL;
+    if(p11 == NULL || p22 == NULL)
+    {
+        return finalResult;
+    }
+    while (p11 != NULL)
+    {
+        p22 = p2->next;
+        Node t = (struct polyNode*)malloc(sizeof(struct polyNode));
+        Node tHead = t;
+        while(p22 != NULL)
+        {
+            Node p = (struct polyNode*)malloc(sizeof(struct polyNode));
+            p->next = NULL;
+            p->coef = p11->coef * p22->coef;
+            p->expon = p11->expon + p22->expon;
+            t->next = p;
+            t = t->next;
+            p22 = p22->next;
+        }
+        //printPolynimal(tHead);
+        finalResult = addPolynimal(tHead, finalResult);
+        //printPolynimal(finalResult);
+        p11 = p11->next;
+    }
+    return finalResult;
+}
+
+int main(int argc, const char * argv[]) {
+    
+    Node p1 = (struct polyNode*)malloc(sizeof(struct polyNode));
+    Node p2 = (struct polyNode*)malloc(sizeof(struct polyNode));
+    Node pMul = (struct polyNode*)malloc(sizeof(struct polyNode));
+    pMul->next = NULL;
+    Node pAdd = (struct polyNode*)malloc(sizeof(struct polyNode));
+    Node p1HeadAdd = p1, p1Read = p1, p1HeadMul = p1;
+    Node p2HeadAdd = p2, p2Read = p2, p2headMul = p2;
+    Node pAddHead = pAdd;
+    Node pMulHead = pMul;
+    
+    int n1,n2;
+    
+    scanf("%d",&n1);
+    inputPolynimal(p1Read, n1);
+    //printPolynimal(p1Read);
+    
+    scanf("%d",&n2);
+    inputPolynimal(p2Read, n2);
+    //printPolynimal(p2Read);
+    
+    //Add
+    pAddHead = addPolynimal(p1HeadAdd, p2HeadAdd);
+    
+    
+    //Mul
+    pMulHead = mulPolynimal(p1HeadMul, p2headMul);
+    
+    
+    printPolynimal(pMulHead);
+    
     printPolynimal(pAddHead);
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     return 0;
