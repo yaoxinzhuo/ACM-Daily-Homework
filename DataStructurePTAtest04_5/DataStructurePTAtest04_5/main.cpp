@@ -42,7 +42,7 @@ Position SingleRotateWithLeft(Position a)
     a->Left = b->Right;
     b->Right = a;
     a->Height = Max(Height(a->Left), Height(a->Right)) + 1;
-    b->Height = Max(Height(b->Left),a->Height) + 1;
+    b->Height = Max(Height(b->Left),Height(b->Right)) + 1;
     return b;
 }
 
@@ -52,7 +52,7 @@ Position SingleRotateWithRight(Position a)
     a->Right = b->Left;
     b->Left = a;
     a->Height = Max(Height(a->Left),Height(a->Right)) + 1;
-    b->Height = Max(a->Height,Height(b->Right)) + 1;
+    b->Height = Max(Height(b->Left),Height(b->Right)) + 1;
     return b;
 }
 
